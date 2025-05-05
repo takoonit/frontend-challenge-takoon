@@ -45,6 +45,7 @@ export default function CitySearchBar() {
                     <Box
                         component="li"
                         {...props}
+                        key={`${option.city}-${option.country}-${option.postcode ?? ''}-${option.coordinates?.latitude ?? ''}-${option.coordinates?.longitude ?? ''}`}
                         sx={customComponents.CitySearchBar.style.renderOption.container}
                     >
                         <Box sx={customComponents.CitySearchBar.style.renderOption.countryRow}>
