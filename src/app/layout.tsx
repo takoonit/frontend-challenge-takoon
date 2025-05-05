@@ -4,6 +4,7 @@ import Providers from '@/app/providers';
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import Link from "next/link";
 import Header from "@/components/common/Header";
+import { GeocodingProvider } from "@/hooks/useGeocoding";
 
 const raleway = Raleway({ subsets: ['latin'], weight: ['400', '700'] });
 
@@ -17,14 +18,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return ( <html lang="en">
-      <body>
-    <Providers>
-      {/* Header */}
-      <Header />
-      <main className={raleway.className}>{children}</main>
-    </Providers>
+  return (<html lang="en">
+    <body>
+      <Providers>
+        <GeocodingProvider>
+          {/* Header */}
+          <Header />
+          <main className={raleway.className}>{children}</main>
+        </GeocodingProvider>
+      </Providers>
     </body>
-    </html>
-  );1
+  </html>
+  ); 1
 }
