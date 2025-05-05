@@ -5,6 +5,7 @@ import { AppBar, Toolbar, Typography } from "@mui/material";
 import Link from "next/link";
 import Header from "@/components/common/Header";
 import { GeocodingProvider } from "@/hooks/useGeocoding";
+import { WeatherProvider } from "@/hooks/useWeather";
 
 const raleway = Raleway({ subsets: ['latin'], weight: ['400', '700'] });
 
@@ -22,9 +23,11 @@ export default function RootLayout({
     <body>
       <Providers>
         <GeocodingProvider>
-          {/* Header */}
-          <Header />
-          <main className={raleway.className}>{children}</main>
+          <WeatherProvider>
+            {/* Header */}
+            <Header />
+            <main className={raleway.className}>{children}</main>
+          </WeatherProvider>
         </GeocodingProvider>
       </Providers>
     </body>
