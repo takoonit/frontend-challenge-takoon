@@ -43,7 +43,7 @@ export async function fetchWeatherByCoordinates(
 
   try {
     const res = await fetch(url);
-    const data = await res.json();
+    const data:WeatherApiResponse = await res.json();
 
     if (!res.ok) throw new Error(data?.message || 'API error');
 
@@ -59,6 +59,7 @@ export async function fetchWeatherByCoordinates(
       rainVolume: data.rain?.['1h'] ?? data.rain?.['3h'] ?? 0,
       minTemp: data.main.temp_min,
       maxTemp: data.main.temp_max,
+      timezone: data.timezone,
     };
 
     return { result, error: null };

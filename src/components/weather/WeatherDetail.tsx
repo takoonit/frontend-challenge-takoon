@@ -10,12 +10,14 @@ import { TemperatureUnitSymbol } from '@/types/weather';
 import WeatherIcon from './WeatherIcon';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { useCityClock } from '@/hooks/useCityClock';
 
 
 export default function WeatherDetail() {
     const { weather, forecast, error, isLoading } = useWeather();
     const { selectedCity } = useGeocoding();
     const { addFavorite, removeFavorite, isFavorite } = useFavorites();
+    const localTime = useCityClock(weather?.timezone);
     const { unit } = useTemperatureUnit();
     const symbol = TemperatureUnitSymbol[unit];
 
@@ -59,6 +61,13 @@ export default function WeatherDetail() {
                             </IconButton>
                         </Tooltip>
                     </Typography>
+
+                    {localTime && (
+                        <Typography variant="body2">
+                            Local Time: {localTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                        </Typography>
+                    )}
+
                 </Box>
 
                 <Typography variant="h6" color="text.secondary">

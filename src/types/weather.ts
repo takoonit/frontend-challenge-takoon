@@ -1,9 +1,9 @@
 export type TemperatureUnit = 'metric' | 'imperial' | 'standard';
 
 export const TemperatureUnitSymbol: Record<TemperatureUnit, string> = {
-  metric: '°C',
-  imperial: '°F',
-  standard: 'K',
+    metric: '°C',
+    imperial: '°F',
+    standard: 'K',
 };
 
 export type WeatherData = {
@@ -18,9 +18,15 @@ export type WeatherData = {
     humidity: number;
     pressure: number;
     rainVolume?: number;
+    timezone?: number;
 };
 
 export type WeatherApiResponse = {
+    message: string;
+    coord: {
+        lon: number;
+        lat: number;
+    };
     weather: {
         main: string;
         description: string;
@@ -29,8 +35,8 @@ export type WeatherApiResponse = {
     main: {
         temp: number;
         feels_like: number;
-        temp_min: number;
-        temp_max: number;
+        temp_min?: number;
+        temp_max?: number;
         pressure: number;
         humidity: number;
     };
@@ -41,14 +47,15 @@ export type WeatherApiResponse = {
         '1h'?: number;
         '3h'?: number;
     };
-    cod?: number;
-    message?: string; // In case of API error
+    timezone?: number; // offset in seconds
+    name?: string;
+    dt: number;
 };
+
 
 export type HourlyForecast = {
     time: number; // UNIX timestamp (ms)
     temperature: number;
     icon: string;
     description: string;
-  };
-  
+};
