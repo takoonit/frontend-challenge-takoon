@@ -1,19 +1,33 @@
 'use client';
 import React from 'react';
-import { Box, Card, CardContent, Typography } from '@mui/material';
-import Grid from '@mui/material/Grid';
+import { Box, Card, CardContent, IconButton, Tooltip, Typography } from '@mui/material';
 import { useWeather } from '@/hooks/useWeather';
 import { useGeocoding } from '@/hooks/useGeocoding';
-import WeatherIcon from './WeatherIcon';
-import { format } from 'date-fns/format';
+import { useFavorites } from '@/hooks/useFavorites';
 import { useTemperatureUnit } from '@/hooks/useTemperatureUnit';
+import { format } from 'date-fns/format';
 import { TemperatureUnitSymbol } from '@/types/weather';
+import WeatherIcon from './WeatherIcon';
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+
 
 export default function WeatherDetail() {
     const { weather, forecast, error, isLoading } = useWeather();
     const { selectedCity } = useGeocoding();
+    const { addFavorite, removeFavorite, isFavorite } = useFavorites();
     const { unit } = useTemperatureUnit();
     const symbol = TemperatureUnitSymbol[unit];
+
+    const toggleFavorite = () => {
+        if (!selectedCity) return;
+        if (isFavorite(selectedCity)) {
+            removeFavorite(selectedCity);
+        } else {
+            addFavorite(selectedCity);
+        }
+    };
+
 
     if (!selectedCity) return null;
 
@@ -36,9 +50,16 @@ export default function WeatherDetail() {
     return (
         <Card className="max-w-md mx-auto mt-6 shadow-md">
             <CardContent>
-                <Typography variant="h5" gutterBottom>
-                    {selectedCity.city}, {selectedCity.country}
-                </Typography>
+                <Box display="flex" justifyContent="space-between" alignItems="center">
+                    <Typography variant="h5">
+                        {selectedCity.city}, {selectedCity.country}
+                        <Tooltip title={isFavorite(selectedCity) ? 'Remove from Favorites' : 'Save to Favorites'}>
+                            <IconButton onClick={toggleFavorite} color='secondary' size='large'>
+                                {isFavorite(selectedCity) ? <StarIcon /> : <StarBorderIcon />}
+                            </IconButton>
+                        </Tooltip>
+                    </Typography>
+                </Box>
 
                 <Typography variant="h6" color="text.secondary">
                     {weather.weatherMain} – {weather.description}
