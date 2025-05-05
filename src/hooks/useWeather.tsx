@@ -3,6 +3,7 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
 import { fetchHourlyForecast, fetchWeatherByCoordinates } from '@/lib/api';
 import { HourlyForecast, WeatherData } from '@/types/weather';
 import { useGeocoding } from './useGeocoding';
+import { useTemperatureUnit } from './useTemperatureUnit';
 
 export type WeatherState = {
   weather: WeatherData | null;
@@ -22,14 +23,15 @@ export const WeatherProvider = ({ children }: WeatherProviderProps) => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [forecast, setForecast] = useState<HourlyForecast[]>([]);
+  const {unit} = useTemperatureUnit();
 
 
   useEffect(() => {
     const fetchWeather = async (lat: number, lon: number) => {
       setIsLoading(true);
       const [{ result: weatherResult, error: weatherErr }, { result: forecastResult }] = await Promise.all([
-        fetchWeatherByCoordinates({ latitude: lat, longitude: lon }),
-        fetchHourlyForecast({ latitude: lat, longitude: lon }),
+        fetchWeatherByCoordinates({ latitude: lat, longitude: lon },unit),
+        fetchHourlyForecast({ latitude: lat, longitude: lon }, unit),
       ]);
 
       setWeather(weatherResult);
@@ -54,7 +56,7 @@ export const WeatherProvider = ({ children }: WeatherProviderProps) => {
         { timeout: 10000 }
       );
     }
-  }, [selectedCity]);
+  }, [selectedCity, unit]);
 
   return (
     <WeatherContext.Provider value={{ weather, forecast, error, isLoading }}>

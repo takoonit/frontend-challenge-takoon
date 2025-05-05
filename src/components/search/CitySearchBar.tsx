@@ -1,12 +1,18 @@
 "use client"
-import { Autocomplete, Box, TextField } from '@mui/material';
+import { Autocomplete, Box, InputAdornment, TextField } from '@mui/material';
 import { useGeocoding } from '@/hooks/useGeocoding';
 import { customComponents } from '@/styles/theme';
 import { GeocodingResponse } from '@/types/geocoding';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
+import LocationSearchingIcon from '@mui/icons-material/LocationSearching';
+import { useTemperatureUnit } from '@/hooks/useTemperatureUnit';
+import { TemperatureUnitSymbol } from '@/types/weather';
 
 export default function CitySearchBar() {
     const { suggestions, searchCity, selectCity, error } = useGeocoding();
+    const { unit } = useTemperatureUnit();
+
+    const symbol = TemperatureUnitSymbol[unit];
 
     // Input change for searching city
     const handleSearchCity = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +44,7 @@ export default function CitySearchBar() {
                 fullWidth
                 // Style the dropdown list using slotProps (MUI v5+)
                 slotProps={{
-                  paper: { sx: customComponents.CitySearchBar.style.paper }
+                    paper: { sx: customComponents.CitySearchBar.style.paper }
                 }}
                 // Custom option rendering for sharp, clean Material look
                 renderOption={(props, option) => (
@@ -50,14 +56,23 @@ export default function CitySearchBar() {
                     >
                         <Box sx={customComponents.CitySearchBar.style.renderOption.countryRow}>
                             <FmdGoodIcon /> <Box sx={customComponents.CitySearchBar.style.renderOption.city}>
-                            {option.city}
-                        </Box>{option.country}{option.postcode ? `, ${option.postcode}` : ''}
+                                {option.city}
+                            </Box>{option.country}{option.postcode ? `, ${option.postcode}` : ''}
                         </Box>
                     </Box>
                 )}
                 getOptionLabel={(option: string | GeocodingResponse) => typeof option === 'string' ? option : option.city || ''}
                 renderInput={(params) => (
                     <TextField
+                        slotProps={{
+                            input: {
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <LocationSearchingIcon />
+                                    </InputAdornment>
+                                ),
+                            },
+                        }}
                         {...params}
                         hiddenLabel
                         placeholder='City/Zip Code'

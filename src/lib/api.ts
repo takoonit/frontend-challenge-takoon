@@ -1,7 +1,7 @@
 import { GeocodingApiResponse, GeocodingResponse } from '@/types/geocoding';
 
 import { Coordinates } from '@/types/geocoding';
-import { HourlyForecast, WeatherApiResponse, WeatherData } from '@/types/weather';
+import { HourlyForecast, TemperatureUnit, WeatherApiResponse, WeatherData } from '@/types/weather';
 
 const GEOCODING_API_KEY = process.env.NEXT_PUBLIC_GEOCODING_API_KEY;
 const GEOCODING_API_URL = 'https://api.geoapify.com/v1/geocode/search';
@@ -37,9 +37,9 @@ export async function fetchGeocoding(query: string): Promise<{ results: Geocodin
 }
 
 export async function fetchWeatherByCoordinates(
-  { latitude, longitude }: Coordinates
+  { latitude, longitude }: Coordinates, unit: TemperatureUnit
 ): Promise<{ result: WeatherData | null; error: string | null }> {
-  const url = `${WEATHER_API_URL}?lat=${latitude}&lon=${longitude}&units=metric&appid=${WEATHER_API_KEY}`;
+  const url = `${WEATHER_API_URL}?lat=${latitude}&lon=${longitude}&units=${unit}&appid=${WEATHER_API_KEY}`;
 
   try {
     const res = await fetch(url);
@@ -68,10 +68,10 @@ export async function fetchWeatherByCoordinates(
 }
 
 export async function fetchHourlyForecast(
-  { latitude, longitude }: Coordinates
+  { latitude, longitude }: Coordinates, unit: TemperatureUnit
 ): Promise<{ result: HourlyForecast[]; error: string | null }> {
-  const url = `${FORECAST_API_URL}?lat=${latitude}&lon=${longitude}&units=metric&appid=${WEATHER_API_KEY}`;
-console.log(url);
+  const url = `${FORECAST_API_URL}?lat=${latitude}&lon=${longitude}&units=${unit}&appid=${WEATHER_API_KEY}`;
+  console.log(url);
   try {
     const res = await fetch(url);
     const data = await res.json();

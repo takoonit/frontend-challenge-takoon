@@ -5,11 +5,15 @@ import Grid from '@mui/material/Grid';
 import { useWeather } from '@/hooks/useWeather';
 import { useGeocoding } from '@/hooks/useGeocoding';
 import WeatherIcon from './WeatherIcon';
-import format from 'date-fns/format';
+import { format } from 'date-fns/format';
+import { useTemperatureUnit } from '@/hooks/useTemperatureUnit';
+import { TemperatureUnitSymbol } from '@/types/weather';
 
 export default function WeatherDetail() {
     const { weather, forecast, error, isLoading } = useWeather();
     const { selectedCity } = useGeocoding();
+    const { unit } = useTemperatureUnit();
+    const symbol = TemperatureUnitSymbol[unit];
 
     if (!selectedCity) return null;
 
@@ -43,19 +47,19 @@ export default function WeatherDetail() {
                 <Box display="flex" alignItems="center" mt={2}>
                     <WeatherIcon iconCode={weather.icon} alt={weather.description} />
                     <Typography variant="h4" ml={2}>
-                        {weather.temperature.toFixed(1)}°C
+                        {weather.temperature.toFixed(1)} {symbol}
                     </Typography>
                 </Box>
 
                 <Box display="flex" flexDirection={{ xs: 'column', sm: 'row' }} gap={2}>
 
                     <Box flex={1}>
-                        <Typography variant="body2">Feels Like: {weather.feelsLike.toFixed(1)}°C</Typography>
+                        <Typography variant="body2">Feels Like: {weather.feelsLike.toFixed(1)} {symbol}</Typography>
                         {weather.minTemp != null && (
-                            <Typography variant="body2">Min: {weather.minTemp.toFixed(1)}°C</Typography>
+                            <Typography variant="body2">Min: {weather.minTemp.toFixed(1)} {symbol}</Typography>
                         )}
                         {weather.maxTemp != null && (
-                            <Typography variant="body2">Max: {weather.maxTemp.toFixed(1)}°C</Typography>
+                            <Typography variant="body2">Max: {weather.maxTemp.toFixed(1)} {symbol}</Typography>
                         )}
                     </Box>
                     <Box flex={1}>
@@ -81,7 +85,7 @@ export default function WeatherDetail() {
                         >
                             <Typography variant="caption">{format(new Date(hour.time), 'HH:mm')}</Typography>
                             <WeatherIcon iconCode={hour.icon} alt={hour.description} size={40} />
-                            <Typography variant="body2">{hour.temperature.toFixed(1)}°C</Typography>
+                            <Typography variant="body2">{hour.temperature.toFixed(1)} {symbol}</Typography>
                         </Box>
                     ))}
                 </Box>
