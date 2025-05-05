@@ -64,15 +64,6 @@ export default function CitySearchBar() {
                 getOptionLabel={(option: string | GeocodingResponse) => typeof option === 'string' ? option : option.city || ''}
                 renderInput={(params) => (
                     <TextField
-                        slotProps={{
-                            input: {
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <LocationSearchingIcon />
-                                    </InputAdornment>
-                                ),
-                            },
-                        }}
                         {...params}
                         hiddenLabel
                         placeholder='City/Zip Code'
