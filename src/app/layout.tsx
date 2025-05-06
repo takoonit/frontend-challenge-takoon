@@ -6,6 +6,7 @@ import Link from "next/link";
 import Header from "@/components/common/Header";
 import { GeocodingProvider } from "@/hooks/useGeocoding";
 import { WeatherProvider } from "@/hooks/useWeather";
+import UnitToggle from '@/components/common/UnitToggle';
 
 const raleway = Raleway({ subsets: ['latin'], weight: ['400', '700'] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
           <WeatherProvider>
             {/* Header */}
             <Header />
+						<UnitToggle />
             <main className={raleway.className}>{children}</main>
           </WeatherProvider>
         </GeocodingProvider>

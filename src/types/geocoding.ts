@@ -1,36 +1,37 @@
 export type Coordinates = {
-    longitude: number;
-    latitude: number;
+	longitude: number;
+	latitude: number;
 };
 
 export type GeocodingResponse = {
-    city: string;
-    country: string;
-    postcode: string;
-    coordinates: Coordinates;
+	city: string;
+	country: string;
+	postcode: string;
+	coordinates: Coordinates;
+	id?: string;
 };
 
 export type GeocodingApiResponse = {
-    features: {
-        properties: { city: string; country: string, postcode: string };
-        geometry: { coordinates: [number, number] };
-    }[];
+	features: {
+		properties: { city: string; country: string; postcode: string };
+		geometry: { coordinates: [number, number] };
+	}[];
 };
 
 export type GeocodingState = {
-    suggestions: GeocodingResponse[];
-    selectedCity: GeocodingResponse | null;
-    error: string | null;
-    searchCity: (query: string) => Promise<void>;
-    selectCity: (city: GeocodingResponse) => void;
+	suggestions: GeocodingResponse[];
+	selectedCity: GeocodingResponse | null;
+	error: string | null;
+	searchCity: (query: string) => Promise<void>;
+	selectCity: (city: GeocodingResponse) => void;
 };
 
 export type CitySearchProps = {
-    query: string;
-    suggestions: GeocodingResponse[];
-    selectedCity: GeocodingResponse | null;
-    searchCity: (query: string) => Promise<void>;
-    selectCity: (city: GeocodingResponse) => void;
-    setQuery: (value: string) => void;
-    error: string | null;
+	query: string;
+	suggestions: GeocodingResponse[];
+	selectedCity: GeocodingResponse | null;
+	searchCity: (query: string) => Promise<void>;
+	selectCity: (city: GeocodingResponse) => void;
+	setQuery: (value: string) => void;
+	error: string | null;
 };

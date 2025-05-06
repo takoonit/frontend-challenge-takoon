@@ -4,15 +4,11 @@ import { useGeocoding } from '@/hooks/useGeocoding';
 import { customComponents } from '@/styles/theme';
 import { GeocodingResponse } from '@/types/geocoding';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
-import LocationSearchingIcon from '@mui/icons-material/LocationSearching';
-import { useTemperatureUnit } from '@/hooks/useTemperatureUnit';
-import { TemperatureUnitSymbol } from '@/types/weather';
+import { useRouter } from 'next/navigation';
 
 export default function CitySearchBar() {
+    const router = useRouter();
     const { suggestions, searchCity, selectCity, error } = useGeocoding();
-    const { unit } = useTemperatureUnit();
-
-    const symbol = TemperatureUnitSymbol[unit];
 
     // Input change for searching city
     const handleSearchCity = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +24,7 @@ export default function CitySearchBar() {
             // Log for debugging, can be removed
             console.log("Selected:", value);
             selectCity(value);
+            router.push('/detail');            
         }
     };
 

@@ -17,7 +17,7 @@ export function useCityClock(timezone: number | undefined) {
         };
 
         update();
-        const interval = setInterval(update, 1000);// Update time each minute
+        const interval = setInterval(update, 10000);// Update time each minute
         return () => clearInterval(interval);
     }, [timezone]);
 
