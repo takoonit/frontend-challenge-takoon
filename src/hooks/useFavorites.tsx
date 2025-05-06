@@ -48,9 +48,9 @@ export function useFavorites() {
 			// Create a new city object with ID
 			const cityWithId = {
 				...city,
-				id: city.id || getCityId(city) // Ensure ID is assigned
+				id: city.id || getCityId(city), // Ensure ID is assigned
 			};
-			setFavorites(prev => [...prev, cityWithId]);
+			setFavorites((prev) => [...prev, cityWithId]);
 		}
 	}
 

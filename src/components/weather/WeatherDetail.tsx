@@ -40,7 +40,7 @@ export default function WeatherDetail({ cityOverride }: Props) {
 
 		const locationWithId = {
 			...location,
-			id: location.id || getCityId(location)
+			id: location.id || getCityId(location),
 		};
 
 		if (isFavorite(locationWithId)) {
@@ -49,7 +49,6 @@ export default function WeatherDetail({ cityOverride }: Props) {
 			addFavorite(locationWithId);
 		}
 	};
-
 
 	useEffect(() => {
 		console.log('Current favorites:', favorites);

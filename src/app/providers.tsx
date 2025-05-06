@@ -6,9 +6,9 @@ import { TemperatureUnitProvider } from '@/hooks/useTemperatureUnit';
 
 // Wraps the app with the global theme
 export default function Providers({ children }: { children: React.ReactNode }) {
-    return <ThemeProvider theme={theme}>
-        <TemperatureUnitProvider>
-            {children}
-        </TemperatureUnitProvider>
-    </ThemeProvider>;
+	return (
+		<ThemeProvider theme={theme}>
+			<TemperatureUnitProvider>{children}</TemperatureUnitProvider>
+		</ThemeProvider>
+	);
 }

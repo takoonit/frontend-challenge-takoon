@@ -11,7 +11,7 @@ export default function UnitToggle() {
 	const units = [
 		{ value: 'metric', label: '°C', tooltip: 'Celsius' },
 		{ value: 'imperial', label: '°F', tooltip: 'Fahrenheit' },
-		{ value: 'standard', label: 'K', tooltip: 'Kelvin' }
+		{ value: 'standard', label: 'K', tooltip: 'Kelvin' },
 	];
 
 	return (
@@ -20,7 +20,7 @@ export default function UnitToggle() {
 				<Tooltip key={unitOption.value} title={unitOption.tooltip}>
 					<Button
 						onClick={() => setUnit(unitOption.value as TemperatureUnit)}
-						variant={unit === unitOption.value ? "contained" : "outlined"}
+						variant={unit === unitOption.value ? 'contained' : 'outlined'}
 						color="secondary"
 						sx={{ minWidth: '36px' }}
 					>

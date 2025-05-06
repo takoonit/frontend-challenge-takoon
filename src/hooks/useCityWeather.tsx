@@ -6,21 +6,24 @@ import { fetchWeatherByCoordinates } from '@/lib/api';
 import { useTemperatureUnit } from './useTemperatureUnit';
 
 export function useCityWeather(city: GeocodingResponse) {
-  const { unit } = useTemperatureUnit();
-  const [weather, setWeather] = useState<WeatherData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+	const { unit } = useTemperatureUnit();
+	const [weather, setWeather] = useState<WeatherData | null>(null);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const load = async () => {
-      setLoading(true);
-      const { result, error } = await fetchWeatherByCoordinates(city.coordinates, unit);
-      if (result) setWeather(result);
-      else setError(error);
-      setLoading(false);
-    };
-    load();
-  }, [city, unit]);
+	useEffect(() => {
+		const load = async () => {
+			setLoading(true);
+			const { result, error } = await fetchWeatherByCoordinates(
+				city.coordinates,
+				unit
+			);
+			if (result) setWeather(result);
+			else setError(error);
+			setLoading(false);
+		};
+		load();
+	}, [city, unit]);
 
-  return { weather, loading, error };
+	return { weather, loading, error };
 }

@@ -31,7 +31,9 @@ export default function CityDetailPage() {
 		} else {
 			// As a fallback, try to get it directly from localStorage
 			try {
-				const storedFavorites = JSON.parse(localStorage.getItem('favoriteCities') || '[]');
+				const storedFavorites = JSON.parse(
+					localStorage.getItem('favoriteCities') || '[]'
+				);
 				const foundCity = findCityById(id, storedFavorites);
 				setCity(foundCity);
 			} catch (e) {
@@ -67,7 +69,14 @@ export default function CityDetailPage() {
 
 	if (loading) {
 		return (
-			<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+			<Box
+				sx={{
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					height: '50vh',
+				}}
+			>
 				<CircularProgress />
 				<Typography variant="h6" ml={2}>
 					Loading city data...
