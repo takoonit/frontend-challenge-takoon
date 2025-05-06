@@ -27,7 +27,6 @@ export default function RootLayout({
           <WeatherProvider>
             {/* Header */}
             <Header />
-						<UnitToggle />
             <main className={raleway.className}>{children}</main>
           </WeatherProvider>
         </GeocodingProvider>
